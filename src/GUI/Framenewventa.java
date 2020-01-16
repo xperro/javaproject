@@ -1,0 +1,2595 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package GUI;
+
+import Clases.funciones;
+import ObjetosDB.Cliente;
+import ObjetosDB.Kitproductos;
+import ObjetosDB.OrdenDeVenta;
+import ObjetosDB.Productos;
+import ObjetosDB.Promociones;
+import ObjetosDB.VentaProducto;
+import ObjetosDB.metodosDB;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author tars
+ */
+public class Framenewventa extends javax.swing.JFrame {
+    private ArrayList<Productos> carroProductos = new ArrayList<ObjetosDB.Productos>();
+    //private ArrayList<Kitproductos> carroKits = new  ArrayList<Kitproductos>();
+    public Cliente cliente=null ;
+    public boolean clientesel=false;String rut;
+    private javax.swing.JLabel jLabel16 = new javax.swing.JLabel("1");
+    private ArrayList<Promociones> promos=null;
+    public             ArrayList<Productos> aux2a;
+      DefaultTableModel modelo1 = new DefaultTableModel() {
+
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+  
+    String t3[] = {"ID","PRODUCTO","PESO","MARCA","TIPO","PRECIO VENTA","CANTIDAD"};
+    private int montoDescuento = 0 ; //Poner descuento de la prmomoción aca porfavor.
+    /**
+     * Creates new form frameNewVenta
+     */
+    public Framenewventa(String rutt) throws SQLException {
+        this.rut=rutt;
+        initComponents();
+        int cantidadpromos=0;
+           jRadioButton1.setActionCommand("Efectivo");
+        jRadioButton2.setActionCommand("Tarjeta");
+        modelo1.setColumnIdentifiers(t3);
+        jTable1.setModel(modelo1);
+        //this.getPromos();
+        
+     /*   while(cantidadpromos<promos.size()){
+       //    jComboBox1.addItem(promos.get(cantidadpromos).getCantidad());
+            cantidadpromos=cantidadpromos+1;
+        }*/
+         aux2a = new metodosDB().getProductos();
+        // Cliente tienda =new metodosDB().getClienteById2(0);
+      
+//                 jLabel16.setText(Integer.toString(tienda.getIdCliente()));
+                 
+          final JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem deleteItem = new JMenuItem("Información del Producto");
+         
+                deleteItem.addActionListener(new ActionListener() 
+                {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                                int id = -1;
+                                boolean error = false;
+                                try{
+                                    int s = jTable1.getSelectedRow();
+                                     id = (int)jTable1.getValueAt(s, 0);
+                                     
+                                }catch(ArrayIndexOutOfBoundsException a)
+                                {
+                                    JOptionPane.showMessageDialog(rootPane, "Debe seleccionar un item de la tabla");
+                                    error = true;
+                                }
+                            if(error == false)
+                             {
+                                try {
+                                    Productos p = new metodosDB().getProductoById(id);
+                                    frameDescripcionProducto freim = new frameDescripcionProducto(p);
+                                    freim.setVisible(true);
+                                } catch (SQLException ex) {
+                                    JOptionPane.showMessageDialog(rootPane, "Error en el producto / producto no existe en base de datos");
+                                }
+                             }
+                        }
+
+                });
+        popupMenu.add(deleteItem);
+        jTable1.setComponentPopupMenu(popupMenu);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jLabel19 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jButton10 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jSeparator4 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jButton20 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jButton21 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setText("0");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nueva Venta");
+        setBackground(new java.awt.Color(0, 0, 0));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Productos", 2, 2, null, java.awt.Color.gray));
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/emblem-sales.png"))); // NOI18N
+        jButton4.setText("Escanear Producto");
+        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search.png"))); // NOI18N
+        jButton5.setText("BUSCAR EN INVENTARIO");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setToolTipText("Código Producto");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton10.setText("Agregar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1)
+                    .addComponent(jSeparator3)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jButton4)
+                .addGap(18, 18, 18)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resumen de Productos", 2, 0));
+
+        jScrollPane1.setFocusable(false);
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                jTable1ComponentAdded(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Remove.png"))); // NOI18N
+        jButton6.setText("Quitar Producto");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resumen Caja", 2, 0, null, java.awt.Color.red));
+        jPanel2.setForeground(new java.awt.Color(51, 255, 51));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel3.setText("Total a Pagar (+IVA):");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel5.setText("I.V.A");
+
+        jLabel6.setText("19%");
+
+        jLabel7.setText("($):");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel8.setText("Descuentos  ($):");
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel20.setText("0");
+
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel21.setText("0");
+
+        jLabel22.setFont(new java.awt.Font("Droid Sans", 1, 24)); // NOI18N
+        jLabel22.setText("0.-");
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Efectivo");
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Tarjeta");
+
+        jLabel12.setText("12%");
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel18.setText("IMPUESTO HARINA");
+
+        jLabel23.setText("($):");
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel24.setText("0");
+
+        jCheckBox1.setText("AL DEBE");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jSeparator2)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jSeparator1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jRadioButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox1)
+                        .addGap(24, 24, 24))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel12))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel6)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel23))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(38, 38, 38))
+                    .addComponent(jSeparator4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(77, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel20))
+                .addGap(9, 9, 9)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel21))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel22))
+                .addGap(18, 18, 18)
+                .addComponent(jRadioButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jCheckBox1))
+                .addContainerGap())
+        );
+
+        jButton1.setBackground(new java.awt.Color(0, 255, 102));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/disk.png"))); // NOI18N
+        jButton1.setText("Imprimir Vale");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(255, 51, 51));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/delete.png"))); // NOI18N
+        jButton3.setText("Cancelar Venta");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton11.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton11.setText("FRUTILLA CON CHOCOLATE");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jButton12.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton12.setText("MANZANA CON CHOCOLATE");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+
+        jButton13.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton13.setText("PLATANO CON CHOCOLATE");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
+        jButton14.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton14.setText("SUSTANCIA CON CHOCOLATE");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+
+        jButton15.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton15.setText("JUGO DE NARANJA");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
+
+        jButton16.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton16.setText("JUGO DE PIÑA");
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
+
+        jButton17.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton17.setText("JUGO DE MELÓN");
+        jButton17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton17ActionPerformed(evt);
+            }
+        });
+
+        jButton18.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton18.setText("UVA CONFITADA");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        jButton19.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton19.setText("MANÍ CONFITADO");
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.setToolTipText("Código Producto");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("PAGA CON:");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("0");
+
+        jButton20.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton20.setText("MANZANA CONFITADA");
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("VUELTO");
+
+        jButton21.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton21.setText("MANÍ");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+
+        jButton22.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Add.png"))); // NOI18N
+        jButton22.setText("HELADO CHOCOLATE");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(252, 252, 252)
+                                        .addComponent(jLabel4)
+                                        .addGap(74, 74, 74))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(23, 23, 23)))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton22, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton21, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton3)
+                        .addComponent(jLabel1)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)))
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+            buscaProductoInventario buscarProducto = new buscaProductoInventario(this.carroProductos,this.modelo1,this.jTable1, jLabel19, jLabel20, jLabel21, jLabel22, montoDescuento ,aux2a,jLabel24);
+            buscarProducto.setVisible(true);
+            
+    }//GEN-LAST:event_jButton5ActionPerformed
+ public void calculaTotales(ArrayList<Productos> carroProductos) throws SQLException
+ { 
+ 
+     int montoNeto=0;
+     double iva_pesos = 0;
+     int iva_porcentaje = 19;
+        int iva_harina_porcentaje = 12;
+        int iva_harina=0;
+     int montoTotal =0;
+     jLabel20.setText("0");
+          int montoharina=0;  montoDescuento = this.promodescuento();
+          jLabel22.setText("0");
+          jLabel20.setText("0");
+          jLabel21.setText("0");
+          jLabel24.setText("0");
+           int sumaPrevia = 0;
+     for(int i = 0 ; i< carroProductos.size();i++)
+     {
+         
+        
+         Productos producto = carroProductos.get(i);
+         montoNeto+= producto.getPrecioVenta();
+         System.out.println("MONTO NETO ACUMULADO"+montoNeto+"\n");
+          double imp=  (double) (producto.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+         
+           if(producto.getHarina()==1){
+                 double imp2=  (double) (producto.getPrecioVenta()*0.12);
+                    System.out.println(imp2);
+             int var3 = (int) Math.ceil(imp2);  
+             iva_harina = (producto.getPrecioVenta()* iva_harina_porcentaje)/100;
+             montoharina=var3+montoharina;
+         }
+           
+     } System.out.println("MONTO NETO harina"+montoharina+"\n");
+     
+     
+    
+sumaPrevia = montoNeto-montoDescuento;
+    jLabel20.setText(Integer.toString(montoDescuento));
+    iva_pesos = (sumaPrevia)*0.19;
+ int var4 = (int) Math.ceil(iva_pesos);  
+    jLabel21.setText(Integer.toString(var4));  System.out.println("MONTO NETO iva"+var4+"\n");
+     jLabel24.setText(Integer.toString(montoharina));   
+      montoTotal = sumaPrevia - montoDescuento+(int)var4+montoharina ;
+      int tot=(this.calculaMonto())-montoDescuento;
+    jLabel22.setText(Integer.toString(tot));
+    
+ }
+ private int contadorpromo(int id) throws SQLException{
+     
+      metodosDB f = new metodosDB();int contador =0;
+             promos=f.getPromociones(); Iterator<Promociones> it = promos.iterator();
+     while (it.hasNext()) {
+             Promociones promoactual=null;
+    promoactual=it.next();
+        System.out.println("ID PROMO: "+promoactual.getIdPromo()+ " ID QUE SE BUSCA : "+id);
+    if(promoactual.getIdPromo()==id){
+        contador++;
+    }
+     }
+      System.out.println("EL NPROMO ES EN EL CONTADOR ES  :::::: "+contador);
+     return contador;
+ }  
+ private int promodescuento() throws SQLException{
+  int valordescuento=0;
+  //carroProductos= empaquetaProductos2(carroProductos);
+         metodosDB f = new metodosDB();
+             promos=f.getPromociones();
+          int contador=0;
+             int descuento=0;int aux=9999999;
+             int npromo=0;
+     Iterator<Promociones> it = promos.iterator();
+     int veces2=0;
+ int id2=0;int veces=0;
+while (it.hasNext()) {
+    
+   
+//System.out.println("hola"+it.next().getIdPromo());
+    Promociones promoactual=null;
+    promoactual=it.next();
+    boolean promoexito=false;
+int monto=promoactual.getMontoDcto();
+int cantidad=promoactual.getCantidad();
+int id= promoactual.getId_producto();
+int idpromo= promoactual.getIdPromo();
+ 
+
+contador=0;
+if( id2==idpromo && npromo>=0){
+
+//contador promociones
+  System.out.println("EL NPROMO ES :::::: "+npromo);
+}else{
+      npromo=this.contadorpromo(idpromo);
+aux=999999;
+
+id2=idpromo;
+descuento=0;
+
+boolean entro=false;
+}
+
+
+ for(int i = 0 ; i< carroProductos.size();i++)
+     {
+         if(carroProductos.get(i).getId_producto()==id){
+              contador++;System.out.println("contador es hasta:"+contador);
+              
+         }else{
+             
+         }
+        
+   
+     }
+ 
+
+
+ 
+ if(promoactual.getCantidad()<=contador){
+     veces2= (int)contador/cantidad; 
+       System.out.println("DIVISION VECES: "+veces2);
+     if(veces2<aux){
+              
+
+
+         aux=veces2;
+         veces= veces2;   System.out.println("DIVISION VECES: "+aux);
+        
+     }
+     
+     promoexito=true;npromo--;
+     
+ }else{
+     
+     promoexito=false;
+     
+ }
+  int val=promoactual.getCantidad();
+  
+ if(promoexito==true && npromo==0){
+     
+     
+     
+      System.out.println("CANTIDAD ES:"+cantidad);
+   System.out.println("contador ES:"+contador);
+   
+   
+
+       
+       
+    veces= veces2;  
+    System.out.println("VECES ES:"+aux);  descuento= promoactual.getMontoDcto()*aux;
+ valordescuento=valordescuento+descuento;
+ 
+ 
+ 
+
+   
+   
+   
+   }
+    
+         
+     
+
+}
+     
+     
+     
+     
+     System.out.println(valordescuento+" : ESTE ES EL DESCUENTO");
+     
+     return valordescuento;}
+ 
+    
+    private ArrayList<Promociones> getPromos() throws SQLException{
+        
+             metodosDB f = new metodosDB();
+             promos=f.getPromociones();
+        return promos;
+    } 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        int borrar = jTable1.getSelectedRow();
+        jLabel20.setText("0");int i=0 ;
+        int posborrar=0;boolean refund=false;
+      int id=(int)  jTable1.getValueAt(borrar, 0);
+      int cant=(int)  jTable1.getValueAt(borrar, 6);
+        while(posborrar!=-1){
+        
+       while(i<this.carroProductos.size()){
+           if( this.carroProductos.get(i).getId_producto()==id){
+                 this.carroProductos.remove(i);refund=true;i--;
+           }
+          
+       i++;}
+       
+       //Aqui re hacemos el carro de compras
+       
+       
+       this.carroProductos=rehacercarro(this.carroProductos);
+       
+       //termino de rehacer array
+       
+       posborrar=-1;
+        
+      if(refund==true){
+        
+          for(int b=0;b<aux2a.size();b++){
+              
+              if(aux2a.get(b).getId_producto()==id){
+                  aux2a.get(b).setCantidadp(aux2a.get(b).getCantidadp()+cant);
+                
+                        try {
+                            calculaTotales(this.carroProductos);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+              }
+          }
+          
+      }
+           
+          
+                
+              
+                modelo1.removeRow(borrar);
+            }
+            
+        try {
+            calculaTotales(this.carroProductos);
+        } catch (SQLException ex) {
+            Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+           this.dispose();
+            jframeUsuario frame = new jframeUsuario(this.rut);
+            frame.setVisible(true);
+            frame.setLocationRelativeTo(null);
+            this.setCursor(Cursor.getDefaultCursor());
+        } catch (SQLException ex) {
+            Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+private ArrayList<Productos> rehacercarro(ArrayList<Productos> carro){
+ ArrayList<Productos> nuevocarro= new ArrayList<Productos>();
+    for(int i=0;i<carro.size();i++){
+     if(carro.get(i).equals(null)){
+        
+     }else{
+          nuevocarro.add(carro.get(i));
+     }
+ }return nuevocarro;
+}
+    private void jTable1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTable1ComponentAdded
+        try {
+            calculaTotales(this.carroProductos);
+        } catch (SQLException ex) {
+            Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable1ComponentAdded
+   
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+  jTextField1.requestFocus();
+  // Listen for changes in the text
+   // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        String codigo=jTextField1.getText();
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      jTextField1.setText("");
+      jTextField1.requestFocus();
+           // TODO add your handling code here:}
+    }//GEN-LAST:event_jButton10ActionPerformed
+ 
+       public boolean buscarenTabla(int id){
+        int i =0;;System.out.println("ho2dla");
+        while(i<modelo1.getRowCount()){
+            if(Integer.parseInt(
+                modelo1.getValueAt(i, 0).toString())==id){
+                return true;
+            }i++;
+        }return false;
+    }
+    
+       public int buscarenTablaIndex(int id){
+        int i =0;
+        while(i<modelo1.getRowCount()){
+            if(Integer.parseInt(modelo1.getValueAt(i, 0).toString())==id){
+                return i;
+            }i++;
+        }return -1;
+    }  
+       
+           public int calculaMonto(){
+        int i =0;int valor=0;
+        while(i<modelo1.getRowCount()){
+        valor=valor+Integer.parseInt(modelo1.getValueAt(i, 6).toString())* Integer.parseInt(modelo1.getValueAt(i, 5).toString());
+            i++;
+        }return valor;
+    }  
+        
+    public void agregarTabla(Object[] object){
+        boolean encontrado= false;
+        encontrado=this.buscarenTabla(Integer.parseInt(object[0].toString()));System.out.println("ho2la");
+        if(encontrado==true){System.out.println("hola");
+        int position= this.buscarenTablaIndex(Integer.parseInt(object[0].toString()));
+          int cantidad=Integer.parseInt(modelo1.getValueAt(position, 6).toString())+1;
+         modelo1.setValueAt(cantidad,position, 6);
+        }else{int imp=0;
+        
+        System.out.println("hola3");
+               
+              object[6] = 1;
+        
+      this.modelo1.addRow(object);
+        }
+        
+            
+            
+    }
+    
+    
+    private String getFecha()
+ {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String FechaHoy = dateFormat.format(cal.getTime());
+        return FechaHoy;
+ }
+    
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       // TODO add your handling code here:
+        int idordenventa=0;
+        String FechaHoy = getFecha();
+        int montoNeto = -1 , iva = -1 , totalPagar = -1 , descuentoTotal = -1;
+        boolean error = false;
+
+        
+        
+        try
+        {
+             montoNeto = Integer.parseInt(jLabel19.getText());
+             iva  = Integer.parseInt(jLabel21.getText());;
+             descuentoTotal = Integer.parseInt(jLabel20.getText());;
+             totalPagar = Integer.parseInt(jLabel22.getText());
+        }catch(NumberFormatException a) 
+            {
+                JOptionPane.showMessageDialog(rootPane, "Error Calculando Precios"); 
+                error = true;
+            } 
+        String nombre, codigo_barra, ordenVenta;
+        int cantidad_vendida,precio_unitario_neto,precio_total_neto,descuento;
+        float precio_unitario_final,precio_total_final;
+        int numeroBoleta = -1, montoTotal = 0 ;
+          String medio_pago = buttonGroup1.getSelection().getActionCommand();
+        int estadoPresupuesto = 0; // 1-> venta, 0 -> presupuesto;
+        ArrayList<VentaProducto> carroVentas;
+        if(this.carroProductos.size()>0) //si hay cosas para vender, vendemos
+        {
+            try {  
+           
+
+                   if(error == false)
+                   {
+                       
+                       //obtenemos datos de clioente
+                       String nombrec="CLIENTE";
+                       String telefono="SIN INFO";
+                       String email= "SIN INFO";
+                       String rut = "SIN INFO";
+                       //datos de orden venta
+                       numeroBoleta =  new metodosDB().getLastId("ordendeventa")+1;
+                       System.out.println("\n numero Boleta" + numeroBoleta);
+                       //comprimimos array de carropdocutos
+                   this.carroProductos= empaquetaProductos2(this.carroProductos);
+                                              System.out.println("paqueteado");
+
+                       //creamos array de ventas productos
+                       carroVentas = creaVentaProducto(this.carroProductos, "producto", numeroBoleta);
+                       System.out.println("carorventascreado");
+                       //creamos orden de venta
+                       OrdenDeVenta orden = new OrdenDeVenta(new metodosDB().getLastId("ordendeventa"), getFecha(),Integer.toString(totalPagar), numeroBoleta, medio_pago,estadoPresupuesto, cliente, carroVentas,Integer.parseInt(jLabel20.getText()) );
+                       System.out.println("cordenventacreado");
+                        //Descontamos productos del inventario;
+                       if(guardaVenta(orden) == false)
+                           error = true;
+                       if(error == false)
+                       {
+                           Imprimir impr = new Imprimir();
+                           
+                           
+                                               System.out.println(orden.getNumeroBoleta());
+    System.out.println(FechaHoy);
+           System.out.println(FechaHoy);                
+                           if(jCheckBox1.isSelected()==true){
+                               jLabel4.setText("DEBE");
+                           }else{
+                               jLabel4.setText("    ");
+                           }
+                           impr.imprimirFactura(Integer.toString(orden.getNumeroBoleta()), FechaHoy,"SIN INFO", "SIN INFO", carroProductos, Integer.parseInt(jLabel22.getText()),rut,"SIN INFO",jLabel4.getText().toString());
+                       JOptionPane.showMessageDialog(rootPane, "Venta Generada Exitosamente, productos descontados de inventario");
+                       descuentaInventario(carroProductos);
+                       this.dispose();
+                 // TODO add your handling code here:
+        Framenewventa frame;
+        this.dispose();
+        try {
+            frame = new Framenewventa(this.rut);   frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Cliente registrado con éxito");
+            Logger.getLogger(jframeUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+                       }
+                       else
+                       {
+                        JOptionPane.showMessageDialog(rootPane, "Ha ocurrido un error en la venta");
+                       }
+
+                   }else
+                   {
+                        JOptionPane.showMessageDialog(rootPane, "Debe seleccionar Cliente!");
+                   }
+
+
+                } catch (SQLException ex) 
+                        {                     
+                            JOptionPane.showMessageDialog(rootPane, "Ha ocurrido un error en la base de datos");
+                        }
+        }
+        else
+        { 
+            JOptionPane.showMessageDialog(rootPane, "No hay productos en el carrito!");
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        String codigo="0";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      jTextField1.setText("");
+      jTextField1.requestFocus();
+           // TODO add your handling code here:}        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+ String codigo="1";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+ String codigo="2";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+     
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+ String codigo="4";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+    
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+ String codigo="6";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+     
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+ String codigo="5";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+     
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+ String codigo="7";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+    
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+ String codigo="8";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+ String codigo="13";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      
+           // TODO add your handling code here:}        // TODO add your handling code here:        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+int pago=Integer.parseInt(jTextField2.getText());      
+int total=Integer.parseInt(jLabel22.getText());
+int vuelto=pago-total;
+jLabel2.setText(Integer.toString(vuelto));
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+ String codigo="3";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+             // TODO add your handling code here:
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+ String codigo="12";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+ String codigo="9";
+         metodosDB f = new metodosDB();
+         
+         Productos encontrado= null;
+         boolean encontrado2=false;
+      if(codigo.equals(null)||codigo.equals("")){
+            jframe1 b = new jframe1();
+            JOptionPane.showMessageDialog(b, "Debe escanear un producto para agregarlo");
+      }else{
+          for (Productos a :aux2a)
+          {
+              if (a.getCodigo_barra().equals(codigo)){
+                  encontrado= new Productos();   encontrado=a;
+              encontrado2=true;
+              }
+               
+          }
+          int position=0;
+          if(encontrado2==false && encontrado==null){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  if(aux2a.get(j).getCodigo_barra().equals( encontrado.getCodigo_barra()))
+                  {
+                      
+                      position = j;
+                  }
+              }}
+          if(encontrado2==false){
+              jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "CODIGO NO ENCONTRADO");
+          }else{
+              int index=-1;
+              for (int j = 0 ; j<aux2a.size();j++)
+              {
+                  
+                  if(aux2a.get(j).getId_producto() == encontrado.getId_producto())
+                  {
+                      
+                      index = j;
+                  }
+              }
+              if(aux2a.get(index).getCantidadp()<1){
+                   jframe1 a = new jframe1();
+              JOptionPane.showMessageDialog(a, "SIN STOCK");
+              }else{
+            double imp=0;
+              Object[] object = new Object[8];
+              object[0]  = encontrado.getId_producto();
+                object[1] = encontrado.getNombre();
+                object[2] = encontrado.getTalla();
+                object[3] = encontrado.getMarca();
+                object[4] = encontrado.getTipo();
+                if(encontrado.getHarina()==0){
+                imp=  (double) (encontrado.getPrecioVenta()*1.0);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    
+                   object[5] =(int)imp;
+            }else{
+               imp=  (double) (encontrado.getPrecioVenta()*1.31);
+                    System.out.println(imp);
+           int var2 = (int) Math.ceil(imp);
+              
+                    object[5] =(int)imp;
+            }
+               
+                object[6] = 1;
+                agregarTabla(object);
+              //aux2a.get(position).setCantidadp(aux2a.get(position).getCantidadp()-1);
+              int cantidadp = encontrado.getCantidadp() -1;
+              encontrado.setCantidadp(cantidadp);
+              aux2a.set(position, encontrado);
+              this.carroProductos.add(encontrado);
+              encontrado2=true;   try {
+                calculaTotales(this.carroProductos);
+            } catch (SQLException ex) {
+                Logger.getLogger(Framenewventa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+              
+          }
+         
+}
+      
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    public boolean hasKits(ArrayList<Productos> pr)
+    {
+        for(Productos p : pr)
+             if(p.getkit() == 1)
+                 return true;
+        return false;
+    }
+    
+    public int buscaCantidad(int id){
+       int filas= jTable1.getRowCount();
+       
+           for(int j = 0 ; j<(filas);j++)
+            {
+                if(jTable1.getValueAt(j, 0)==id){
+                    return Integer.parseInt(jTable1.getValueAt(j, 6).toString());
+                }
+                
+            }  return 0;
+        
+    }
+    private ArrayList<Productos> empaquetaProductos2(ArrayList<Productos> carroProductos) throws SQLException{
+        ArrayList<Productos> productosventa= new ArrayList<Productos>();
+        Productos producto = new Productos();
+        int rows=jTable1.getRowCount();metodosDB f = new metodosDB();
+         for(int i=0;i<rows;i++){
+             
+           producto= f.getProductoById(Integer.parseInt(jTable1.getValueAt(i, 0).toString()));
+             producto.setCantidadp(producto.getCantidadDB()-Integer.parseInt(jTable1.getValueAt(i, 6).toString()));
+       System.out.println("CANTIDAD actual: "+  producto.getCantidadActual());
+            producto.setCantidadActual(producto.getCantidadActual()-Integer.parseInt(jTable1.getValueAt(i, 6).toString()));
+               System.out.println("Nombre Producto: "+producto.getNombre() );
+              System.out.println("Stock: "+producto.getCantidadDB() );
+            System.out.println("Cantidad a vender: "+Integer.parseInt(jTable1.getValueAt(i, 6).toString()) );
+             
+             
+             
+             productosventa.add(producto);
+             
+         }
+       return productosventa; 
+    } 
+    
+    private ArrayList<Productos> empaquetaProductos(ArrayList<Productos> carroProductos)
+    { ArrayList<Productos> productosventa= new ArrayList<Productos>();
+        for(int i=0;i<this.carroProductos.size();i++)
+        {
+            
+            Productos producto = this.carroProductos.get(i);
+            
+//   this.carroProductos.get(i).setCantidadp(this.buscaCantidad(this.carroProductos.get(i).getId_producto()));
+            int cv = (carroProductos.get(i).getCantidadDB()-carroProductos.get(i).getCantidadp());
+             System.out.println("Nombre Producto: "+carroProductos.get(i).getNombre() );
+              System.out.println("Stock: "+carroProductos.get(i).getCantidadDB() );
+            System.out.println("Cantidad a vender: "+cv );
+            if(cv==1){
+                
+            }else{
+              for(int j = 0 ; j<(cv-1);j++)
+            {
+                int indice = this.carroProductos.indexOf(producto);
+                this.carroProductos.remove(indice-1);
+                
+            }
+              
+            }
+            
+            for(int m=0;i<this.carroProductos.size();m++){
+                if(this.carroProductos.get(m).equals(null)){
+                    
+                }else{
+                    productosventa.add(this.carroProductos.get(m));
+                }
+            }
+           
+        }
+        return productosventa;
+     }
+    private ArrayList<VentaProducto> creaVentaProducto(ArrayList<Productos> carroProductos, String kit_or_product , int numeroBoleta) throws SQLException
+    {
+        ArrayList<VentaProducto> carroVentas = new ArrayList<VentaProducto>();
+        int idVentaProducto = new metodosDB().getLastId("ventaproducto")+1;
+        //    public VentaProducto(int idVentaProducto, String fecha, int precioUnitarioNeto, int cantidadProducto, int precioUnitarioFinal, int precioTotalNeto, int precioTotalFinal, int descuento, Kitproductos kit, Productos producto, int idOrdenDeVenta,String kit_or_product) { //Constructor
+        int precio_unitario_neto, precio_total_neto, cantidad_vendida;
+        int  precio_unitario_final, precio_total_final;
+        int id_orden_venta = numeroBoleta , descuento = 0 ;
+        if(kit_or_product.equals("producto")) 
+            {
+                
+                for(Productos p : carroProductos)
+                {   //REVISAR ESTO, ESTA GUARDANDO MAL EL PRECIO UNITARIO DE VENTA.
+                       double imp=0;double imp2=0;
+                    cantidad_vendida = p.getCantidadDB()-p.getCantidadActual();
+                    precio_unitario_neto = p.getPrecioVenta(); double iva=1.0;
+                    if(p.getHarina()==1){
+                         iva = 1.31;
+                    }
+                         imp=  (double) (precio_unitario_neto*iva);
+                    System.out.println(imp);
+           int var2 = (int) Math.floor(imp);
+                    precio_unitario_final = var2;
+                    precio_total_neto = precio_unitario_final * cantidad_vendida;
+                            imp2=  (double) (precio_unitario_neto*iva);
+                    System.out.println(imp2);
+           int var3 = (int) Math.floor(imp2);  System.out.println("LAWardDEVAR3ES: "+var3);
+                    precio_total_final = var3; 
+                    VentaProducto venta = new VentaProducto(idVentaProducto, getFecha(),precio_unitario_neto, cantidad_vendida, precio_unitario_final, precio_total_neto, precio_total_final, descuento, null, p, id_orden_venta,"producto");
+                    carroVentas.add(venta);
+                }
+    
+            }
+        return carroVentas;
+    }
+    
+    
+    private boolean guardaVenta(OrdenDeVenta orden)
+    {
+        try {
+            //guardamos el objeto orden de venta.
+            new metodosDB().addOrdenVenta(orden);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Error almacenando venta en la bdd");
+            return false;
+
+        }
+        return true;
+    }
+    private void descuentaInventario(ArrayList<Productos> carroProductos)throws SQLException
+    {
+        for(Productos p : carroProductos)
+        {
+            int cantidad_vendida = (p.getCantidadDB()-p.getCantidadp());
+             System.err.println("cantip:"+p.getCantidadp());
+               System.err.println("cantvendi"+p.getCantidadActual());
+              System.err.println("cantidb"+p.getCantidadDB());
+            System.err.println("cantvendi"+cantidad_vendida);
+            p.setCantidadActual(p.getCantidadDB()-(1 * cantidad_vendida));
+            new metodosDB().updateProductos(p);
+
+        }
+    }
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Framenewventa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Framenewventa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Framenewventa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Framenewventa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+               
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    // End of variables declaration//GEN-END:variables
+
+
+
+}
